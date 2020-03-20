@@ -1,0 +1,53 @@
+type Client {
+    id: ID
+    firstName: String
+    lastName: String
+    company: String
+    emails: [Email]
+    type: ClientType
+    orders: [Order]
+}
+
+type Email {
+    email: String
+}
+
+type Order {
+    product: String
+    price: Int
+}
+
+enum ClientType {
+    STANDARD
+    PREMIUM
+}
+
+type Query {
+    getClient(id: ID!): Client
+}
+
+"""  ALL ARE NECESSARY FIELDS TO CREATE A NEW CLIENT """
+input ClientInput {
+    firstName: String!
+    lastName: String!
+    company: String!
+    emails: [EmailInput]!
+    type: ClientType!
+    orders: [OrderInput]
+}
+
+input EmailInput {
+    email: String
+}
+
+input OrderInput {
+    product: String
+    price: Int
+}
+
+""" MUTATION FOR CREATE NEW CLIENTS """
+type Mutation {
+    # ResolverName(Input with data):returned value
+    """ THIS MUTATION ALLOWS YOU TO CREATE NEW CLIENTS """
+    createClient(input: ClientInput): Client
+}

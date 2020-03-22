@@ -24,15 +24,18 @@ enum ClientType {
 
 type Query {
     getClient(id: ID!): Client
+    getNClients(num: Int): [Client]
+    getClients: [Client]
 }
 
 """  ALL ARE NECESSARY FIELDS TO CREATE A NEW CLIENT """
 input ClientInput {
-    firstName: String!
-    lastName: String!
-    company: String!
-    emails: [EmailInput]!
-    type: ClientType!
+    id: ID
+    firstName: String
+    lastName: String
+    company: String
+    emails: [EmailInput]
+    type: ClientType
     orders: [OrderInput]
 }
 
@@ -50,4 +53,6 @@ type Mutation {
     # ResolverName(Input with data):returned value
     """ THIS MUTATION ALLOWS YOU TO CREATE NEW CLIENTS """
     createClient(input: ClientInput): Client
+    updateClient(input: ClientInput): Client
+    deleteClient(id: ID!): String
 }

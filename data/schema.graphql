@@ -1,11 +1,12 @@
 type Client {
     id: ID
-    firstName: String
+    firstName: String!
     lastName: String
     company: String
-    emails: [Email]
+    email: String
     type: ClientType
     orders: [Order]
+    age: Int
 }
 
 type Email {
@@ -18,7 +19,7 @@ type Order {
 }
 
 enum ClientType {
-    STANDARD
+    BASIC
     PREMIUM
 }
 
@@ -31,10 +32,11 @@ type Query {
 """  ALL ARE NECESSARY FIELDS TO CREATE A NEW CLIENT """
 input ClientInput {
     id: ID
+    age: Int
     firstName: String
     lastName: String
     company: String
-    emails: [EmailInput]
+    email: String
     type: ClientType
     orders: [OrderInput]
 }

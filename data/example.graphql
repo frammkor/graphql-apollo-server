@@ -1,0 +1,133 @@
+Welcome to GraphiQL
+
+GraphiQL is an in-browser tool for writing, validating, and
+testing GraphQL queries.
+
+Type queries into this side of the screen, and you will see intelligent
+typeaheads aware of the current GraphQL type schema and live syntax and
+validation errors highlighted within the text.
+
+GraphQL queries typically start with a "{" character. Lines that starts
+with a # are ignored.
+
+An example GraphQL query might look like:
+
+    {
+      field(arg: "value") {
+        subField
+      }
+    }
+
+Keyboard shortcuts:
+
+ Prettify Query:  Shift-Ctrl-P (or press the prettify button above)
+
+    Merge Query:  Shift-Ctrl-M (or press the merge button above)
+
+      Run Query:  Ctrl-Enter (or press the play button above)
+
+  Auto Complete:  Ctrl-Space (or just start typing)
+
+________________________________
+
+query {
+  getClients{
+    id
+  }
+}
+________________________________
+
+query {
+  getNClients(num: 2) {
+    id
+    firstName
+  }
+}
+________________________________
+
+query ($id: ID!) {
+  getClient(id: $id) {
+    id
+    lastName
+  }
+}
+________________________________
+using alias and fragments
+query {
+  first: getClient(id: "5e764a50fdad9003c9726db5") {
+    ...campos
+  }
+  second: getClient(id: "5e76b8d78341ee0bfda59d43") {
+    ...campos 
+    orders {
+  		product
+  	}
+  }
+}
+
+fragment campos on Client {
+  firstName
+  id
+  lastName
+  company
+  emails {
+    email
+  }
+}
+________________________________
+
+mutation ($input: ClientInput){
+  createClient(input: $input) {
+    id
+    firstName
+  }
+}
+________________________________
+
+mutation {
+  createClient(input: {
+    firstName: "Luciano",
+    lastName: "Alvarenga",
+    company: "Tango",
+    emails: [
+      {
+        email: "frammkor@hotmail.com"
+      },
+      {
+        email: "random@mail.com"
+      }
+    ],
+    type: STANDARD,
+    orders: [
+      {
+        product: "GQL course",
+        price: 10
+      },
+      {
+        product: "PC",
+        price: 1000
+      }
+    ]
+  }) {
+        id
+    firstName
+  }
+}
+
+________________________________
+
+mutation ($id: ID!) {
+  updateClient (input: {
+    id: $id,
+    lastName: "Cespi"
+    
+  }) {
+    id
+    lastName
+  }
+}
+________________________________
+
+mutation ($id: ID!) {
+  deleteClient (id: $id)
+}

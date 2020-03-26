@@ -21,14 +21,16 @@ const resolvers = {
   },
   Mutation: {
     createClient: (root, { input }) => {
+      console.log("input", input)
       const {
-        firstName, lastName, company, emails, type, orders,
+        firstName, lastName, company, email, type, orders, age,
       } = input;
       const newClient = new Client({
         firstName,
         lastName,
         company,
-        emails,
+        email,
+        age,
         type,
         orders,
       });

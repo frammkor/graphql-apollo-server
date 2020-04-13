@@ -1,9 +1,15 @@
+# CLIENT TYPES
+type ClientTotalSpend {
+    totalSpend: Float
+    clientInfo: [Client]
+}
+
 type Client {
     id: ID
     firstName: String!
     lastName: String
     company: String
-    email: String
+    emails: [Email]
     type: ClientType
     orders: [Order]
     age: Int
@@ -13,31 +19,21 @@ type Email {
     email: String
 }
 
-type Order {
-    product: String
-    price: Int
-}
-
 enum ClientType {
     BASIC
     PREMIUM
 }
 
-type Query {
-    getClient(id: ID!): Client
-    getNClients(num: Int): [Client]
-    getClients: [Client]
-}
-
-"""  ALL ARE NECESSARY FIELDS TO CREATE A NEW CLIENT """
+# CLIENT INPUTS
+"""  ALL BUT ORDERS ARE NECESSARY FIELDS TO CREATE A NEW CLIENT """
 input ClientInput {
     id: ID
-    age: Int
-    firstName: String
-    lastName: String
-    company: String
-    email: String
-    type: ClientType
+    age: Int!
+    firstName: String!
+    lastName: String!
+    company: String!
+    emails: [EmailInput]!
+    type: ClientType!
     orders: [OrderInput]
 }
 
@@ -45,16 +41,98 @@ input EmailInput {
     email: String
 }
 
-input OrderInput {
-    product: String
+# PRODUCT TYPES
+type Product {
+    id: ID
+    name: String
     price: Int
+    stock: Int
 }
 
-""" MUTATION FOR CREATE NEW CLIENTS """
+# PRODUCT INPUTS
+input ProductInput {
+    id: ID
+    name: String
+    price: Int
+    stock: Int
+}
+
+# ORDER TYPES
+type Order {
+    id: ID
+    productsRequested: [ProductRequested]
+    totalPrice: Int
+    date: String
+    clientId: ID
+    status: OrderStatus
+}
+
+type ProductRequested {
+    amount: Int
+    id: ID
+}
+
+enum OrderStatus {
+    PENDING
+    CANCELED
+    COMPLEATED
+}
+
+# ORDER INPUTS
+input OrderInput {
+    id: ID
+    productsRequested: [ProductRequestedInput],
+    totalPrice: Int
+    date: String
+    clientId: ID
+    status: OrderStatus
+}
+
+input ProductRequestedInput {
+    amount: Int
+    id: ID
+}
+
+# QUERIES
+type Query {
+    # Clients
+    getClientById (id: ID!): Client
+    getClients (limit: Int, offset: Int): [Client]
+    getTotalClients: String
+    getTopClientBySpends: [ClientTotalSpend]
+
+    # Products
+    getProducts (limit: Int, offset: Int, byStock: Boolean ): [Product]
+    getProductById (id: ID!): Product
+    getTotalProducts: String
+
+    # Orders
+    getOrders (limit: Int, offset: Int): [Order]
+    getOrdersByClientId (limit: Int, offset: Int, clientId: ID): [Order]
+}
+
+# MUTATIONS
+""" MUTATIONS FOR THE API """
 type Mutation {
     # ResolverName(Input with data):returned value
-    """ THIS MUTATION ALLOWS YOU TO CREATE NEW CLIENTS """
+
+    # ================ CLIENTS ================
+    """ MUTATION FOR CREATE A NEW CLIENTS """
     createClient(input: ClientInput): Client
+    """ MUTATION FOR UPDATE AN EXISTING CLIENTS """
     updateClient(input: ClientInput): Client
+    """ MUTATION FOR DELETE A SINGLE CLIENT """
     deleteClient(id: ID!): String
+
+    # ================ PRODUCTS ================
+    """ MUTATION FOR CREATE A NEW PRODUCS """
+    createProduct(input: ProductInput): Product
+    """ MUTATION FOR UPDATE AN EXISTING PRODUCT """
+    updateProduct(input: ProductInput): Product
+    """ MUTATION FOR DELETE A SINGLE PRODUCT """
+    deleteProduct(id: ID!): String
+
+    # ================ ORDERS ================
+    createOrder(input: OrderInput): Order
+    updateOrder(input: OrderInput): String
 }

@@ -1,5 +1,8 @@
-import { Client, Product, Order } from '../models';
-import { PromiseProvider } from 'mongoose';
+import { Client, Product, Order, User } from '../models';
+import mongoose, { PromiseProvider, isValidObjectId } from 'mongoose';
+import bcrypt from 'bcrypt'
+import { createToken } from '../assets/auth';
+// const ObjectId = mongoose.Types.ObjectId
 
 const resolvers = {
   Query: {
@@ -12,8 +15,12 @@ const resolvers = {
       });
     }),
 
-    getClients: (root, { limit, offset }) => new Promise((resolve, reject) => {
-      Client.find().limit(limit).skip(offset)
+    getClients: (root, { limit, offset, creatorId }) => new Promise((resolve, reject) => {
+      let filter;
+      if (creatorId) {
+        filter = { creatorId: mongoose.Types.ObjectId(creatorId) }
+      }
+      Client.find(filter).limit(limit).skip(offset)
         .then(
           (clients) => resolve(clients),
         )
@@ -112,12 +119,20 @@ const resolvers = {
         )
         .catch((err) => reject(err));
     }),
+
+    // USERS
+    getCurrentUser: (root, args, { userName }) => {
+      if (!userName) { return null }
+      const validUser = User.findOne({ userName })
+      return validUser;
+    }
   },
+
   Mutation: {
     // CLIENTS
     createClient: (root, { input }) => {
       const {
-        firstName, lastName, company, emails, type, orders, age,
+        firstName, lastName, company, emails, type, orders, age, creatorId,
       } = input;
       const newClient = new Client({
         firstName,
@@ -127,6 +142,7 @@ const resolvers = {
         age,
         type,
         orders,
+        creatorId,
       });
       return new Promise((resolve, reject) => {
         newClient.save((err) => {
@@ -237,8 +253,52 @@ const resolvers = {
       });
     }),
 
+    // USERS
+    createUser: async (root, { input }) => {
+      const { userName, password, role } = input;
+      return new Promise((resolve, reject) => {
+        User.findOne({ userName }, (err, data) => {
+          if (err) return new Error(err)
+          if (data) {
+            resolve('Invalid User Name')
+            return
+          } else {
+            const newUser = new User({
+              userName,
+              password,
+              role,
+            });
+            newUser.id = newUser._id;
+            newUser.save((err) => {
+              if (err) {
+                reject(err);
+              } else {
+                resolve("Creado correctamente")
+              }
+            })
+          };
+        })
+      })
+    },
 
-  },
+    authenticateUser: async (root, { input }) => {
+      const { userName, password } = input;
+      const existingUser = await User.findOne({ userName });
+      if (!existingUser) {
+        console.log('No user with that name founded')
+        return { message: 'No user with that name founded' };
+      }
+      const passwordsAreEqual = await bcrypt.compare(password, existingUser.password);
+      if (!passwordsAreEqual) {
+        console.log('Invalid password');
+        return { message: 'Invalid password' };
+      } else {
+        console.log('Valid password');
+        const token = createToken(existingUser.userName)
+        return { token }
+      }
+    }
+  }
 };
 
 export default resolvers;

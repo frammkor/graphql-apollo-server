@@ -6,6 +6,7 @@ dotenv.config();
 //   masterKey: process.env.API_KEY,
 export const port = process.env.PORT;
 export const dbURI = process.env.MONGODB_URI;
+export const tokenGen = process.env.TOKEN_GEN;
 
 // module.exports = {
 //   endpoint: process.env.API_URL,

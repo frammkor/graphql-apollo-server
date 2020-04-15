@@ -11,8 +11,8 @@ type Client {
     company: String
     emails: [Email]
     type: ClientType
-    orders: [Order]
     age: Int
+    creatorId: ID
 }
 
 type Email {
@@ -34,7 +34,7 @@ input ClientInput {
     company: String!
     emails: [EmailInput]!
     type: ClientType!
-    orders: [OrderInput]
+    creatorId: ID!
 }
 
 input EmailInput {
@@ -78,6 +78,30 @@ enum OrderStatus {
     COMPLEATED
 }
 
+# USER TYPES
+type User {
+    _id: ID
+    userName: String
+    role: Role
+}
+
+type Token {
+    token: String
+}
+
+# USER INPUTS
+input UserInput {
+    _id: ID
+    role: Role
+    userName: String!
+    password: String!
+}
+
+enum Role {
+    ADMIN
+    SELLER
+}
+
 # ORDER INPUTS
 input OrderInput {
     id: ID
@@ -97,7 +121,7 @@ input ProductRequestedInput {
 type Query {
     # Clients
     getClientById (id: ID!): Client
-    getClients (limit: Int, offset: Int): [Client]
+    getClients (limit: Int, offset: Int, creatorId: ID): [Client]
     getTotalClients: String
     getTopClientBySpends: [ClientTotalSpend]
 
@@ -109,6 +133,9 @@ type Query {
     # Orders
     getOrders (limit: Int, offset: Int): [Order]
     getOrdersByClientId (limit: Int, offset: Int, clientId: ID): [Order]
+
+    # User
+    getCurrentUser: User
 }
 
 # MUTATIONS
@@ -135,4 +162,8 @@ type Mutation {
     # ================ ORDERS ================
     createOrder(input: OrderInput): Order
     updateOrder(input: OrderInput): String
+
+    # ================ USERS ================
+    createUser(input: UserInput): String
+    authenticateUser(input: UserInput): Token
 }

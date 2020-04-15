@@ -1,10 +1,8 @@
 // LIBS
 import express from "express";
 
-// GRAPHQL
-import { ApolloServer } from "apollo-server-express";
-import typeDefs from "./data/schema";
-import resolvers from "./data/resolvers";
+// APOLLO SERVER
+import server from './config/apolloServerConfig';
 
 // PORT
 import { port } from './config/env';
@@ -16,8 +14,6 @@ require('./config/database');
 
 
 const app = express();
-
-const server = new ApolloServer({ typeDefs, resolvers });
 
 // app.get('/', (req, res) => {
 //   res.send('hola')

@@ -1,8 +1,8 @@
 # CLIENT TYPES
 
 type Client {
-    id: ID
-    firstName: String!
+    clientId: ID
+    firstName: String
     lastName: String
     company: String
     emails: [Email]
@@ -12,7 +12,7 @@ type Client {
 }
 
 input ClientInput {
-    id: ID
+    clientId: ID
     age: Int!
     firstName: String!
     lastName: String!

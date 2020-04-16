@@ -1,7 +1,7 @@
 # QUERIES
 type Query {
     # Clients
-    getClientById (id: ID!): Client
+    getClientById (clientId: ID!): Client
     getClients (limit: Int, offset: Int, userId: ID): [Client]
     getTotalClients: String
     getTopClientBySpends: [ClientTotalSpend]

@@ -3,8 +3,6 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const clientSchema = new Schema({
-  id: mongoose.Types.ObjectId,
-  userId: mongoose.Types.ObjectId,
   age: Number,
   company: String,
   emails: Array,
@@ -12,6 +10,9 @@ const clientSchema = new Schema({
   lastName: String,
   orders: Array,
   type: String,
+  id: mongoose.Types.ObjectId,
+  clientId: mongoose.Types.ObjectId,
+  userId: mongoose.Types.ObjectId,
 });
 
 const Client = mongoose.model('Client', clientSchema);

@@ -1,8 +1,8 @@
-
+import { User } from '../../../models';
+import { createToken } from '../../../assets/auth';
+import bcrypt from 'bcrypt'
 
 const usersMutations = {
-
-  // USERS
   createUser: async (root, { input }) => {
     const { userName, password, role } = input;
     return new Promise((resolve, reject) => {

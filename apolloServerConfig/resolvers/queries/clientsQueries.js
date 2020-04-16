@@ -1,4 +1,5 @@
 import { Client, Order } from '../../../models';
+import mongoose from 'mongoose';
 
 const clientsQueries = {
   getTotalClients: (root) => new Promise((resolve, reject) => {
@@ -22,8 +23,9 @@ const clientsQueries = {
       .catch((err) => reject(err));
   }),
 
-  getClientById: (root, { id }) => new Promise((resolve, reject) => {
-    Client.findById(id)
+  getClientById: (root, { clientId }) => new Promise((resolve, reject) => {
+
+    Client.findById(clientId)
       .then(
         (client) => resolve(client)
       )

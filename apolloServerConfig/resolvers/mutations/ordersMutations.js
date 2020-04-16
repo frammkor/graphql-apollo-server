@@ -1,4 +1,4 @@
-import { Order } from '../../../models';
+import { Order, Product } from '../../../models';
 
 const ordersMutations = {
   createOrder: (root, { input }) => {

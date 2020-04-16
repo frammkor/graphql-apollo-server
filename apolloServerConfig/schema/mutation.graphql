@@ -10,7 +10,7 @@ type Mutation {
     """ MUTATION FOR UPDATE AN EXISTING CLIENTS """
     updateClient(input: ClientInput): Client
     """ MUTATION FOR DELETE A SINGLE CLIENT """
-    deleteClient(id: ID!): String
+    deleteClient(clientId: ID!): String
 
     # ================ PRODUCTS ================
     """ MUTATION FOR CREATE A NEW PRODUCS """

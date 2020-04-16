@@ -14,6 +14,7 @@ const clientsMutations = {
       type,
       userId,
     });
+    newClient.clientId = newClient._id;
     return new Promise((resolve, reject) => {
       newClient.save((err) => {
         if (err) { reject(err); } else { resolve(newClient); }
@@ -22,19 +23,19 @@ const clientsMutations = {
   },
 
   updateClient: (root, { input }) => new Promise((resolve, reject) => {
-    Client.findByIdAndUpdate(input.id, input, { new: true }, (err, client) => {
+    Client.findByIdAndUpdate(input.clientId, input, { new: true }, (err, client) => {
       if (err) { reject(err); } else { resolve(client); }
     });
   }),
 
-  deleteClient: (root, { id }) => new Promise((resolve, reject) => {
-    Client.findByIdAndDelete(id, (err, res) => {
+  deleteClient: (root, { clientId }) => new Promise((resolve, reject) => {
+    Client.findByIdAndDelete(clientId, (err, res) => {
       if (err) {
         reject(err);
       } if (res) {
-        resolve(`Client ${id} has been deleted`);
+        resolve(`Client ${clientId} has been deleted`);
       } else {
-        resolve(`No client with id '${id}' has been found`);
+        resolve(`No client with id '${clientId}' has been found`);
       }
     });
   }),

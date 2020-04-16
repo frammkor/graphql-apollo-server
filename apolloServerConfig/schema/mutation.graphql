@@ -1,3 +1,12 @@
+type MutationResponse {
+    status: ResponseStatus
+    message: String
+}
+
+enum ResponseStatus {
+    ERROR
+    SUCCESS
+}
 
 # MUTATIONS
 """ MUTATIONS FOR THE API """
@@ -25,6 +34,6 @@ type Mutation {
     updateOrder(input: OrderInput): String
 
     # ================ USERS ================
-    createUser(input: UserInput): String
+    createUser(input: UserInput): MutationResponse
     authenticateUser(input: UserInput): Token
 }

@@ -17,4 +17,5 @@ type Query {
 
     # User
     getCurrentUser: User
+    getTopSellerBySpends: [UserTotalSpend]
 }

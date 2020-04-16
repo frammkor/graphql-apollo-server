@@ -39,6 +39,6 @@ const clientsMutations = {
       }
     });
   }),
-}
+};
 
 export default clientsMutations;

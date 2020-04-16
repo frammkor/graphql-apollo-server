@@ -13,7 +13,7 @@ const productsQueries = {
   getProducts: (root, { limit, offset, byStock }) => new Promise((resolve, reject) => {
     let filter;
     if (byStock) {
-      filter = { stock: { $gt: 0 } }
+      filter = { stock: { $gt: 0 } };
     }
 
     Product.find(filter).limit(limit).skip(offset)
@@ -26,12 +26,12 @@ const productsQueries = {
   getProductById: (root, { id }) => new Promise((resolve, reject) => {
     Product.findById(id)
       .then(
-        (product) => resolve(product)
+        (product) => resolve(product),
       )
       .catch(
-        (err) => reject(err)
-      )
+        (err) => reject(err),
+      );
   }),
-}
+};
 
 export default productsQueries;

@@ -13,7 +13,7 @@ const ordersMutations = {
       totalPrice,
       date: new Date(),
       clientId,
-      status: "PENDING",
+      status: 'PENDING',
       userId,
     });
     return new Promise((resolve, reject) => {
@@ -27,10 +27,10 @@ const ordersMutations = {
     const { status } = input;
     let instruction;
     switch (status) {
-      case "COMPLEATED":
+      case 'COMPLEATED':
         instruction = '-';
         break;
-      case "CANCELED":
+      case 'CANCELED':
         instruction = '+';
         break;
       default:
@@ -38,10 +38,10 @@ const ordersMutations = {
     }
     input.productsRequested.forEach((product) => {
       Product.updateOne({ _id: product.id }, {
-        "$inc": {
-          "stock": `${instruction}${product.amount}`
-        }
-      }, (err) => { if (err) return new Error(err) })
+        $inc: {
+          stock: `${instruction}${product.amount}`,
+        },
+      }, (err) => { if (err) return new Error(err); });
     });
 
     Order.findByIdAndUpdate(input.id, input, { new: true }, (err, data) => {
@@ -49,6 +49,6 @@ const ordersMutations = {
     });
   }),
 
-}
+};
 
 export default ordersMutations;

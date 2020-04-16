@@ -1,5 +1,5 @@
-import { Client, Order } from '../../../models';
 import mongoose from 'mongoose';
+import { Client, Order } from '../../../models';
 
 const clientsQueries = {
   getTotalClients: (root) => new Promise((resolve, reject) => {
@@ -13,7 +13,7 @@ const clientsQueries = {
   getClients: (root, { limit, offset, userId }) => new Promise((resolve, reject) => {
     let filter;
     if (userId) {
-      filter = { userId: mongoose.Types.ObjectId(userId) }
+      filter = { userId: mongoose.Types.ObjectId(userId) };
     }
 
     Client.find(filter).limit(limit).skip(offset)
@@ -24,46 +24,45 @@ const clientsQueries = {
   }),
 
   getClientById: (root, { clientId }) => new Promise((resolve, reject) => {
-
     Client.findById(clientId)
       .then(
-        (client) => resolve(client)
+        (client) => resolve(client),
       )
       .catch(
-        (err) => reject(err)
-      )
+        (err) => reject(err),
+      );
   }),
 
   getTopClientBySpends: (root) => new Promise((resolve, reject) => {
     Order.aggregate([
       {
-        $match: { status: "COMPLEATED" }
+        $match: { status: 'COMPLEATED' },
       },
       {
         $group: {
-          _id: "$clientId",
-          totalSpend: { $sum: "$totalPrice" }
-        }
+          _id: '$clientId',
+          totalSpend: { $sum: '$totalPrice' },
+        },
       },
       {
         $lookup: {
           from: 'clients',
           localField: '_id',
           foreignField: '_id',
-          as: 'clientInfo'
-        }
+          as: 'clientInfo',
+        },
       },
       {
-        $sort: { totalSpend: -1 }
+        $sort: { totalSpend: -1 },
       },
       {
-        $limit: 10
-      }
+        $limit: 10,
+      },
     ], (err, data) => {
       if (err) reject(err);
       else resolve(data);
-    })
+    });
   }),
-}
+};
 
 export default clientsQueries;

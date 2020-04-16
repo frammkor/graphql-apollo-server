@@ -7,7 +7,7 @@ const userSchema = new Schema({
   id: mongoose.Types.ObjectId,
   userName: String,
   password: String,
-  role: String
+  role: String,
 });
 
 userSchema.pre('save', function (next) {
@@ -20,9 +20,9 @@ userSchema.pre('save', function (next) {
       if (err) return next(err);
       this.password = hash;
       next();
-    })
-  })
-})
+    });
+  });
+});
 
 const User = mongoose.model('User', userSchema);
 

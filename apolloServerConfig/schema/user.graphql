@@ -22,3 +22,8 @@ enum Role {
     ADMIN
     SELLER
 }
+
+type UserTotalSpend {
+    totalSpend: Float
+    userInfo: [User]
+}

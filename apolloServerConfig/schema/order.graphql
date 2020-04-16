@@ -1,0 +1,37 @@
+# ORDER TYPES
+type Order {
+    id: ID
+    productsRequested: [ProductRequested]
+    totalPrice: Int
+    date: String
+    clientId: ID
+    status: OrderStatus
+    userId: ID
+}
+
+type ProductRequested {
+    amount: Int
+    id: ID
+}
+
+enum OrderStatus {
+    PENDING
+    CANCELED
+    COMPLEATED
+}
+
+# ORDER INPUTS
+input OrderInput {
+    id: ID
+    productsRequested: [ProductRequestedInput],
+    totalPrice: Int
+    date: String
+    clientId: ID
+    status: OrderStatus
+    userId: ID
+}
+
+input ProductRequestedInput {
+    amount: Int
+    id: ID
+}

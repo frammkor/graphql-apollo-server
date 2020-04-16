@@ -1,0 +1,42 @@
+# CLIENT TYPES
+
+type Client {
+    id: ID
+    firstName: String!
+    lastName: String
+    company: String
+    emails: [Email]
+    type: ClientType
+    age: Int
+    userId: ID
+}
+
+input ClientInput {
+    id: ID
+    age: Int!
+    firstName: String!
+    lastName: String!
+    company: String!
+    emails: [EmailInput]!
+    type: ClientType!
+    userId: ID!
+}
+
+type Email {
+    email: String
+}
+
+input EmailInput {
+    email: String
+}
+
+
+enum ClientType {
+    BASIC
+    PREMIUM
+}
+
+type ClientTotalSpend {
+    totalSpend: Float
+    clientInfo: [Client]
+}

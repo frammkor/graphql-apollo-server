@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const clientSchema = new Schema({
   id: mongoose.Types.ObjectId,
-  creatorId: mongoose.Types.ObjectId,
+  userId: mongoose.Types.ObjectId,
   age: Number,
   company: String,
   emails: Array,

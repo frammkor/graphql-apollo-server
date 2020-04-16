@@ -1,0 +1,24 @@
+
+# USER TYPES
+type User {
+    _id: ID
+    userName: String
+    role: Role
+}
+
+type Token {
+    token: String
+}
+
+# USER INPUTS
+input UserInput {
+    _id: ID
+    role: Role
+    userName: String!
+    password: String!
+}
+
+enum Role {
+    ADMIN
+    SELLER
+}

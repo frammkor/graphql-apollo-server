@@ -1,0 +1,13 @@
+type Product {
+    id: ID
+    name: String
+    price: Int
+    stock: Int
+}
+
+input ProductInput {
+    id: ID
+    name: String
+    price: Int
+    stock: Int
+}

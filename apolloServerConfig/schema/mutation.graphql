@@ -1,0 +1,30 @@
+
+# MUTATIONS
+""" MUTATIONS FOR THE API """
+type Mutation {
+    # ResolverName(Input with data):returned value
+
+    # ================ CLIENTS ================
+    """ MUTATION FOR CREATE A NEW CLIENTS """
+    createClient(input: ClientInput): Client
+    """ MUTATION FOR UPDATE AN EXISTING CLIENTS """
+    updateClient(input: ClientInput): Client
+    """ MUTATION FOR DELETE A SINGLE CLIENT """
+    deleteClient(id: ID!): String
+
+    # ================ PRODUCTS ================
+    """ MUTATION FOR CREATE A NEW PRODUCS """
+    createProduct(input: ProductInput): Product
+    """ MUTATION FOR UPDATE AN EXISTING PRODUCT """
+    updateProduct(input: ProductInput): Product
+    """ MUTATION FOR DELETE A SINGLE PRODUCT """
+    deleteProduct(id: ID!): String
+
+    # ================ ORDERS ================
+    createOrder(input: OrderInput): Order
+    updateOrder(input: OrderInput): String
+
+    # ================ USERS ================
+    createUser(input: UserInput): String
+    authenticateUser(input: UserInput): Token
+}

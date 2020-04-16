@@ -1,0 +1,20 @@
+# QUERIES
+type Query {
+    # Clients
+    getClientById (id: ID!): Client
+    getClients (limit: Int, offset: Int, userId: ID): [Client]
+    getTotalClients: String
+    getTopClientBySpends: [ClientTotalSpend]
+
+    # Products
+    getProducts (limit: Int, offset: Int, byStock: Boolean ): [Product]
+    getProductById (id: ID!): Product
+    getTotalProducts: String
+
+    # Orders
+    getOrders (limit: Int, offset: Int): [Order]
+    getOrdersByClientId (limit: Int, offset: Int, clientId: ID): [Order]
+
+    # User
+    getCurrentUser: User
+}

@@ -2,7 +2,7 @@
 import express from "express";
 
 // APOLLO SERVER
-import server from './config/apolloServerConfig';
+import server from './apolloServerConfig';
 
 // PORT
 import { port } from './config/env';

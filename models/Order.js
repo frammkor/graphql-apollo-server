@@ -7,6 +7,7 @@ const orderSchema = new Schema({
   totalPrice: Number,
   date: Date,
   clientId: mongoose.Types.ObjectId,
+  userId: mongoose.Types.ObjectId,
   status: String,
 });
 

@@ -3,7 +3,7 @@ type Query {
     # Clients
     getClientById (clientId: ID!): Client
     getClients (limit: Int, offset: Int, userId: ID): [Client]
-    getTotalClients: String
+    getTotalClients (userId: ID): String
     getTopClientBySpends: [ClientTotalSpend]
 
     # Products

@@ -2,8 +2,12 @@ import mongoose from 'mongoose';
 import { Client, Order } from '../../../models';
 
 const clientsQueries = {
-  getTotalClients: (root) => new Promise((resolve, reject) => {
-    Client.countDocuments({}, (err, count) => {
+  getTotalClients: (root, { userId }) => new Promise((resolve, reject) => {
+    let filter;
+    if (userId) {
+      filter = { userId: mongoose.Types.ObjectId(userId) };
+    }
+    Client.countDocuments(filter, (err, count) => {
       if (err) {
         reject(err);
       } else { resolve(count); }
